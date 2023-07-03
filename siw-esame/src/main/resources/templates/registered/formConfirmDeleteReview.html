@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		Form confirm to delete film
+	</title>
+	<link rel="stylesheet" href="/css/stile1.css" />
+</head>
+
+<body>
+  <div class="flexbox-container-vertical">
+        
+        <header class="header">
+		   <img src="/images/logo-siw.png" width="100%"/>
+		   <div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+	    </header>
+		
+        <div class="section">
+			<div class="flexbox-container-horizontal">
+				
+				<div class="flex-item-1">
+					 
+				</div>
+				
+				<div class="flex-item-2">
+					<div  class="flexbox-item-scroll">
+						<h1 th:text="${review.movie.getTitle()}+'(' + ${review.movie.getYear()} + ')'">ciao</h1>
+				    <div>
+                    <span>Sicuro di voler cancellare questa recensione? </span>
+                    <div><span th:text="${review.title} + ' voto: ' + ${review.rating}"></span></div>
+                    <div><span th:text="${review.text}"></span></div>
+                     </div>
+					<div th:if="${credenziali!=null && credenziali.isAdmin()}">
+                    <form th:action="@{'/admin/deleteReview/' + ${review.id}}" method="GET" >
+                        <div>
+                            <span><button type="submit">Conferma</button></span>
+                        </div>
+                    </form>	
+                    </div>	 
+                      <div th:unless="${credenziali!=null && credenziali.isAdmin()}">
+                      <form th:action="@{'/registered/deleteReviewRegistered/' + ${review.id}}" method="GET" >
+                          <div>
+                              <span><button type="submit">Conferma</button></span>
+                          </div>
+                      </form>	
+                  </div>
+						 
+					</div>		
+				</div>
+				</div>
+			</div>
+        </div>
+        <div class="footer"></div>
+      </div>
+	
+</body>
+
+</html>

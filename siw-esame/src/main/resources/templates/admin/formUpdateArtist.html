@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+	    <title>Modifica o cancella artista</title>
+		<link rel="stylesheet" href="/css/stile2.css" />
+
+	</head>
+<body>
+	<div class="flexbox-container-vertical">
+        
+        <div class="header">
+			<img src="/images/logo-siw.png" width="70%"/>
+			<div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+		</div>
+	
+		<div class="section">
+			<div class="flexbox-container-horizontal-sa">
+				
+				
+				<div class="flexbox-item-solo">
+					<div class="scrollable-content">
+						<h1 th:text="${artist.name}+' '+${artist.surname}">nome e cognome</h1>
+				        <div>Anno: <span th:text="'(' + ${artist.dateOfBirth} + ')'">data nascita</span></div>
+				        <div class="flex-item-2"><img th:src="@{'data:image;base64,' + ${artist.imageString}}" width="20%"></div>
+				        <form th:action="@{'/admin/formUpdateArtistData'+'/'+ ${artist.id}}" method="GET">
+							 <div>
+								<span><button class="button-orange" type="submit">modifica</button></span>
+							</div>
+						</form>
+						<form th:action="@{'/admin/formConfirmDeleteArtist'+'/'+ ${artist.id}}" method="GET">
+							 <div>
+								<span><button class="button-red" type="submit">elimina</button></span>
+							</div>
+						</form>
+						<div class="container-bottom-right">
+							<div class="flexbox-indietro">								
+								<a href="/admin/manageArtist"><img src="/images/back-arrow.png" width="20%"/></a>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+					
+				
+				
+			</div>
+        </div>
+        <div class="footer"></div>
+	</div>
+
+</body>
+</html>

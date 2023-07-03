@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>Gestione Film</title>
+	<link rel="stylesheet" href="/css/stile2.css" />
+</head>
+
+<body>
+	<div class="flexbox-container-vertical">
+        
+        <div class="header">
+			<img src="/images/logo-siw.png" width="70%"/>
+			<div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+		</div>
+	
+		<div class="section">
+			<div class="flexbox-container-horizontal-sa">
+				
+				<div class="flexbox-item-solo">
+					<div class="scrollable-content">
+						<h1>Film</h1>
+						
+						<div th:if="${movies.isEmpty()}">Non ci sono film nel sistema</div>
+						<li th:each="movie : ${movies}">
+							<strong th:href="@{'/movies' + '/' + ${movie.id}}"
+								th:text="${movie.title} + ' (' + ${movie.year} + ')'">Up! (2000)</strong>
+							<div>
+								<a th:href="@{'/admin/formUpdateMovie'+'/'+${movie.id}}"> modifica dati</a>
+							</div>
+						</li>
+					</div>
+				</div>
+				
+				<div class="flex-item-1">
+					<h1>Inserisci film</h1>
+					<a href="/admin/formNewMovie"><img src="/images/add-movie.png" width="40%"></a>
+				</div>
+				
+			</div>
+        </div>
+        <div class="imghome">
+			<a href="/"><img src="/images/home.png" width="20%"/></a>
+		</div>
+        <div class="footer"></div>
+	</div>
+
+</body>
+<html>

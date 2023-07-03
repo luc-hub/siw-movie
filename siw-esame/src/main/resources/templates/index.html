@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<title>
+			SiwMovie - Homepage
+		</title>
+		<link rel="stylesheet" href="/css/stile.css" />
+	</head>
+	<body>
+	
+	 <div class="flexbox-container">
+         
+		<header class="header">
+		   <img src="/images/logo-siw.png" width="100%"/>
+		   <div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+          
+		</header>
+      
+       <div class="nav">
+			<h1>Consulta l'archivio!</h1>
+		</div>
+       
+       <div class="section">
+			<div class="flexbox-container-horizontal">
+       
+        
+	    <div class="flexbox-item-1">
+			<h1>Film</h1>
+	        <a href="/generic/movies"><img src="/images/video-player.png" width="30%"/></a>
+	    </div>
+	    <div class="flexbox-item-1">
+			<h1>Artisti</h1>
+	        <a href="/generic/artists"><img src="/images/actor.png" width="30%"/></a>
+	    </div>
+       
+       </div>
+      </div>
+	    
+	     <div class="footer"></div>
+	  </div>
+	</body>
+</html>

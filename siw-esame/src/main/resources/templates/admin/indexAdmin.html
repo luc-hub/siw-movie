@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		SiwMovie - Homepage
+	</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header class="header">
+		   <img src="/images/logo-siw.png" width="100%"/>
+		   <div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+	</header>
+	<div class="flexbox-container-2">
+			 
+	    <div class="flexbox-item-1">
+			<h1>Film</h1>
+	        <a href="/generic/movies"><img src="/images/video-player.png" width="30%"/></a>
+	    </div>
+	    <div class="flexbox-item-1">
+			<h1>Attori</h1>
+	        <a href="/generic/artists"><img src="/images/actor.png" width="30%"/></a>
+	    </div>
+	    
+	</div>
+	 <div class="flexbox-container-3">
+		 
+	    <div class="flexbox-item-2"align-content: center>
+			<h1>Operazioni Film</h1>
+	        <a href="/admin/manageMovies"><img src="/images/video-camera.png" width="30%"/></a>
+	    </div>
+	    <div class="flexbox-item-2">
+			<h1>Operazioni Artisti</h1>
+	        <a href="/admin/manageArtist"><img src="/images/setting.png" width="30%"/></a>
+	    </div>
+	     <div class="footer"></div>
+	  </div>
+</body>
+
+</html>

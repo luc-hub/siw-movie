@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		New Artist
+	</title>
+	<link rel="stylesheet" href="/css/stile2.css" />
+</head>
+
+<body>		
+	<div class="flexbox-container-vertical">
+        
+        <div class="header">
+			<img src="/images/logo-siw.png" width="70%"/>
+			<div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+		</div>
+	
+		<div class="section">
+			<div class="flexbox-container-horizontal-sa">
+				
+				<div class="flex-item-register">
+					<h1>Aggiungi un Artista</h1>
+					<form th:action="@{/admin/artist}" method="POST" th:object="${artist}" enctype="multipart/form-data">
+						<div th:if="${#fields.hasGlobalErrors()}">
+							<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+						</div>
+						
+						<div>
+							<label for="name">Nome:</label> 
+							<span><input required type="text" th:field="${artist.name}" id="name"/></span>
+							<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+						</div>
+				
+						<div>
+							<label for="surname">Cognome:</label> 
+							<span><input required type="text" th:field="${artist.surname}" id="surname"/></span>
+							<span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+						</div>
+						<div>
+							<label>Data di nascita: </label>
+							<span><input type="date" th:field="${artist.dateOfBirth}" /></span>
+							<span th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></span>
+						</div>
+						<div>
+				        	<input type="file" th:name="image" accept="/image*">
+				        </div>
+				        
+						<div>
+							<span><button type="submit">Conferma</button></span>
+						</div>
+						
+						<div class="container-bottom-right">
+							<div class="flexbox-indietro">								
+								<a href="/admin/manageArtist"><img src="/images/back-arrow.png" width="20%"/></a>
+							</div>
+						</div>
+					</form>
+					
+				</div>
+				
+			</div>
+		</div>
+      <div class="footer"></div>
+	</div>
+</body>
+
+</html>

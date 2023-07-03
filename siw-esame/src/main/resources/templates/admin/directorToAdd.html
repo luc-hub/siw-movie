@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		Aggiungi direttore a film
+	</title>
+	<link rel="stylesheet" href="/css/stile2.css" />
+
+</head>
+<body>
+	<div class="flexbox-container-vertical">
+        
+        <div class="header">
+			<img src="/images/logo-siw.png" width="70%"/>
+			<div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+		</div>
+	
+		<div class="section">
+			<div class="flexbox-container-horizontal-sa">
+				
+				<div class="flexbox-item-solo">
+					<div class="scrollable-content">
+						<h1>Selezionare il direttore del film</h1>
+						<div th:if="${directors.isEmpty()}">Non ci sono direttori nel sistema</div>
+						<li th:each="director : ${directors}">
+							<a th:href="@{'/admin/setDirectorToMovie' + '/' + ${director.id} + '/' + ${movie.id}}"
+								th:text="${director.name} + ' ' + ${director.surname}">nome e cognome del direttore</a>
+						</li>
+					</div>
+				</div>
+				
+			</div>
+        </div>
+        <div class="imghome">
+			<a href="/"><img src="/images/home.png" width="20%"/></a>
+		</div>
+        <div class="footer"></div>
+	</div>
+
+</body>
+</html>

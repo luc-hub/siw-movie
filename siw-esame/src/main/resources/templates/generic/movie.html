@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    Film
+  </title>
+  <link rel="stylesheet" href="/css/stile1.css" />
+</head>
+<body>
+<div class="flexbox-container-vertical">
+
+  <div class="header">
+    <img src="/images/logo-siw.png" width="70%"/>
+    <div class="text" th:if="${#request.userPrincipal}">
+      <span th:text="${#request.userPrincipal.principal.username}"></span>
+      <a href="/logout">Logout</a>
+    </div>
+    <div class="text" th:unless="${#request.userPrincipal}">
+      <a href="/login">Login</a>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="/"><img src="/images/home.png" width="4%" />Home</a>
+    <a href="/generic/movies"><img src="/images/video-player.png" width="4%" />Elenco film</a>
+  </div>
+
+  <div class="section">
+    <div class="flexbox-container-horizontal">
+
+      <div class="flex-item-1">
+        <img th:src="@{'data:image;base64,' + ${movie.imageString}}">
+      </div>
+
+      <div class="flex-item-2">
+        <div  class="flexbox-item-scroll">
+          <h1 th:text="${movie.title}+'(' + ${movie.year} + ')'">titolo</h1>
+
+
+          <div th:if="${movie.director}">
+            <strong>Regista: </strong>
+            <span th:text="${movie.director.name} + ' ' + ${movie.director.surname}"></span>
+          </div>
+          <div th:unless="${movie.director}">L'archivio non contiene il regista del film</div>
+          <div>
+            <strong>Attori:</strong>
+            <ul>
+              <li th:each="actor : ${movie.actors}">
+                <span th:text="${actor.name} + ' ' + ${actor.surname}"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-item-3">
+        <div class="flexbox-item-scroll">
+          <h2>Recensioni
+            <form th:action="@{'/registered/addReviewToMovie' + '/' + ${movie.id}}" method="GET" th:object="${movie}">
+              <span><button type="submit" >Aggiungi recensione</button></span>
+            </form>
+          </h2>
+          <div class="text" th:if="${!movie.reviews.isEmpty()}">
+
+            <div>
+              Media recensioni: <span th:text="${movie.getAverageReview()}"></span>
+            </div>
+            <div>
+              <ul>
+                <li th:each="review : ${movie.reviews}">
+                  <div><span th:text="${review.user.name}+' '+${review.user.surname}"></span></div>
+                  <div><strong th:text="${review.title}"></strong></div>
+                  <div><span th:text="${review.text}"></span></div>
+                  <div>Voto: <span th:text="${review.rating}"></span></div>
+                  <div>
+                    <a th:if="${credenziali!=null && credenziali.getUser()==review.user}">
+                      <form th:action="@{'/registered/formConfirmDeleteReview/'+${review.id}}" method="GET">
+                        <span><button type="submit">Elimina recensione</button></span>
+                      </form>
+                    </a>
+                    <div th:unless="${credenziali!=null && credenziali.getUser()==review.user}">
+                      <a th:if="${credenziali!=null && credenziali.isAdmin()}">
+                        <form th:action="@{'/registered/formConfirmDeleteReview/'+${review.id}}" method="GET">
+                          <span><button type="submit">Elimina recensione</button></span>
+                        </form>
+                      </a>
+                    </div>
+                  </div>
+				  <div> ----------------------------------</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div th:unless="${!movie.reviews.isEmpty()}">Nessuna recensione nell'archivio</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+	<title>
+		Aggiungi artista
+	</title>
+	<link rel="stylesheet" href="/css/stile2.css" />
+
+</head>
+<body>
+	<div class="flexbox-container-vertical">
+        
+        <div class="header">
+			<img src="/images/logo-siw.png" width="70%"/>
+			<div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+		</div>
+	
+		<div class="section">
+			<div class="flexbox-container-horizontal-se">
+				
+				<div class="flexbox-item-solo">
+					<div class="scrollable-content">
+						<h3>Attori presenti nel film: </h3>
+				    	<ul>
+							<li th:each="actorOfMovie : ${actorsOfMovie}">
+								<div>
+									<span th:text="${actorOfMovie.name} + ' ' + ${actorOfMovie.surname}"></span>
+									<a th:href="@{'/admin/removeActorFromMovie'+'/'+${actorOfMovie.id}+'/'+${movie.id}}">cancella</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="flexbox-item-solo">
+					<div class="scrollable-content">
+						<h3>Attori che puoi aggiungere: </h3>
+						<ul>
+							<li th:each="notActorOfMovie : ${notActorsOfMovie}">
+								<div>
+									<span th:text="${notActorOfMovie.name} + ' ' + ${notActorOfMovie.surname}"></span>
+									<a th:href="@{'/admin/addActorToMovie'+'/'+${notActorOfMovie.id}+'/'+${movie.id}}">aggiungi</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="imghome">
+			<a href="/"><img src="/images/home.png" width="4%" />Home</a>
+		</div>
+        <div class="footer"></div>
+	</div>
+
+</body>
+</html>

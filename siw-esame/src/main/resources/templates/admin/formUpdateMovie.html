@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+	    <title>Film</title>
+		<link rel="stylesheet" href="/css/stile2.css" />
+
+	</head>
+<body>
+	<div class="flexbox-container-vertical">
+        
+        <div class="header">
+			<img src="/images/logo-siw.png" width="70%"/>
+			<div class="text" th:if="${#request.userPrincipal}">
+				<span th:text="${#request.userPrincipal.principal.username}"></span>
+				<a href="/logout">Logout</a>
+			</div>
+			<div class="text" th:unless="${#request.userPrincipal}">
+				<a href="/login">Login</a>
+			</div>
+		</div>
+	
+		<div class="section">
+			<div class="flexbox-container-horizontal-sa">
+				
+				<div class="flex-item-1">
+					<h1>Modifica regista</h1>
+					<a th:href="@{'/admin/addDirectorToMovie'+'/'+${movie.id}}"><img src="/images/director-chair.png" width="40%"></a>
+				</div>
+				
+				<div class="flexbox-item-solo">
+					<div class="scrollable-content">
+						<h1 th:text="${movie.title}">Titolo Film</h1>
+				        <div>Anno: <span th:text="${movie.year}">anno in cifre</span></div>
+				        <div th:if="${movie.director}">
+							Regista: <span th:text="${movie.director.name} + ' ' + ${movie.director.surname}"></span>
+						</div>
+						<div th:unless="${movie.director}">Nessun direttore associato al film</div>
+                      
+                        <div th:if="${movie.actors}">
+							Attori: 
+                            <li th:each="attore : ${movie.actors}">
+                                <span th:text="${attore.name} + ' ' + ${attore.surname}"></span>
+                            </li>
+						</div>
+						<div th:unless="${movie.actors}">Nessun attore associato al film</div>
+                      
+				        <div class="flex-item-2"><img th:src="@{'data:image;base64,' + ${movie.imageString}}" width="20%"></div>
+				        <form th:action="@{'/admin/formUpdateMovieData'+'/'+ ${movie.id}}" method="GET">
+							 <div>
+								<span><button class="button-red" type="submit">modifica film</button></span>
+							</div>
+						</form>
+						<form th:action="@{'/admin/formConfirmDeleteFilm'+'/'+ ${movie.id}}" method="GET">
+							 <div>
+								<span><button class="button-red" type="submit">elimina film</button></span>
+							</div>
+						</form>
+						
+					</div>
+				</div>
+					
+				<div class="flex-item-1">
+					<h1>Modifica attori</h1>
+					<a th:href="@{'/admin/updateActorsOfMovie'+ '/' + ${movie.id}}"><img src="/images/theatre.png" width="30%"></a>
+				</div>
+				
+			</div>
+        </div>
+        <div class="imghome">
+			<a href="/admin/manageMovies"><img src="/images/list.png" width="20%"/></a>
+		</div>
+        <div class="footer"></div>
+	</div>
+
+</body>
+</html>
